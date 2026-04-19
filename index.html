@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EquiSim Pro | Probabilistic Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#a2eeff",
+                        "tertiary-fixed": "#ffdead",
+                        "surface-container-highest": "#2e3545",
+                        "on-primary-fixed": "#2c0051",
+                        "secondary-container": "#00cbe6",
+                        "on-tertiary-fixed": "#281900",
+                        "surface-tint": "#ddb7ff",
+                        "secondary-fixed-dim": "#2fd9f4",
+                        "tertiary": "#fabc4e",
+                        "on-surface-variant": "#cfc2d6",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#bd871a",
+                        "on-secondary": "#00363e",
+                        "surface-container-lowest": "#070e1d",
+                        "on-primary-fixed-variant": "#6900b3",
+                        "inverse-primary": "#842bd2",
+                        "on-error": "#690005",
+                        "surface-dim": "#0c1322",
+                        "outline": "#988d9f",
+                        "on-secondary-fixed-variant": "#004e5a",
+                        "primary-fixed": "#f0dbff",
+                        "on-surface": "#dce2f7",
+                        "surface-container-high": "#232a3a",
+                        "background": "#0c1322",
+                        "tertiary-fixed-dim": "#fabc4e",
+                        "on-tertiary-container": "#3a2600",
+                        "on-background": "#dce2f7",
+                        "surface-container-low": "#141b2b",
+                        "on-secondary-container": "#00515d",
+                        "outline-variant": "#4d4354",
+                        "inverse-surface": "#dce2f7",
+                        "on-error-container": "#ffdad6",
+                        "primary": "#ddb7ff",
+                        "on-secondary-fixed": "#001f25",
+                        "on-primary": "#490080",
+                        "on-primary-container": "#400071",
+                        "surface-container": "#191f2f",
+                        "surface-bright": "#323949",
+                        "inverse-on-surface": "#293040",
+                        "on-tertiary": "#432c00",
+                        "surface": "#0c1322",
+                        "primary-fixed-dim": "#ddb7ff",
+                        "secondary": "#5de6ff",
+                        "primary-container": "#b76dff",
+                        "surface-variant": "#2e3545",
+                        "on-tertiary-fixed-variant": "#604100",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #070e1d; color: #dce2f7; }
+        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+        .glass-card {
+            background: rgba(46, 53, 69, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 30px rgba(221, 183, 255, 0.15);
+        }
+        .neon-border-cyan {
+            border: 1px solid rgba(93, 230, 255, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="selection:bg-primary/30 selection:text-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-[#0c1322]/40 backdrop-blur-xl border-b border-[#4d4354]/20 z-50 shadow-[0_0_40px_rgba(221,183,255,0.06)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tighter text-[#ddb7ff] italic font-headline">EquiSim Pro</span>
+<nav class="hidden md:flex gap-6">
+<a class="font-headline tracking-tight text-[#ddb7ff]/60 hover:text-[#ddb7ff] transition-colors" href="company.html">Market</a>
+<a class="font-headline tracking-tight text-[#5de6ff] border-b-2 border-[#5de6ff] pb-1" href="simulation.html">Terminal</a>
+<a class="font-headline tracking-tight text-[#ddb7ff]/60 hover:text-[#ddb7ff] transition-colors" href="dashboard.html">Simulations</a>
+<a class="font-headline tracking-tight text-[#ddb7ff]/60 hover:text-[#ddb7ff] transition-colors" href="#">Academy</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#ddb7ff]/60 hover:bg-[#ddb7ff]/10 p-2 rounded-lg transition-all" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-[#ddb7ff]/60 hover:bg-[#ddb7ff]/10 p-2 rounded-lg transition-all" data-icon="settings">settings</button>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2 rounded-xl font-bold tracking-tight active:scale-95 duration-200 ease-in-out shadow-lg neon-glow-primary">
+                Connect Wallet
+            </button>
+</div>
+</header>
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="relative min-h-[921px] flex items-center justify-center overflow-hidden px-4 py-20">
+<!-- Background Decoration -->
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-secondary/10 blur-[160px] rounded-full"></div>
+<div class="container mx-auto relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center gap-2 bg-surface-container/50 border border-outline-variant/30 px-4 py-2 rounded-full backdrop-blur-md">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-[10px] font-label uppercase tracking-widest text-secondary font-bold">New: Monte Carlo V4.2</span>
+</div>
+<h1 class="text-6xl md:text-8xl font-headline font-bold tracking-tighter leading-[0.9] text-on-background">
+                        Stop Guessing.<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary">Start Simulating.</span>
+</h1>
+<p class="max-w-xl text-lg md:text-xl text-on-surface-variant/80 font-body leading-relaxed">
+                        The ultimate probabilistic terminal for the next generation of analysts. Replace rigid DCFs with 10,000-path Monte Carlo simulations in seconds. Precision meets volatility.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="px-10 py-5 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-3xl font-headline font-bold text-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all neon-glow-primary group">
+                            Launch Terminal
+                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="trending_up">trending_up</span>
+</button>
+<button class="px-10 py-5 bg-surface-variant/40 border border-outline-variant/20 text-on-surface rounded-3xl font-headline font-bold text-lg hover:bg-surface-variant/60 transition-all backdrop-blur-xl">
+                            View Docs
+                        </button>
+</div>
+</div>
+<!-- Hero Visual Overlay -->
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary/30 to-secondary/30 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+<div class="relative glass-card rounded-3xl p-6 neon-border-cyan overflow-hidden border border-white/5 shadow-2xl">
+<div class="flex items-center justify-between mb-8">
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-error/50"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary/50"></div>
+<div class="w-3 h-3 rounded-full bg-secondary/50"></div>
+</div>
+<span class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant/40">NVDA // SIMULATION_ENGINE</span>
+</div>
+<div class="h-64 flex items-end gap-1 mb-6">
+<!-- Mock Visualization of Monte Carlo paths -->
+<div class="flex-1 bg-primary/20 rounded-t-sm" style="height: 30%"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm" style="height: 45%"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm" style="height: 60%"></div>
+<div class="flex-1 bg-primary/60 rounded-t-sm" style="height: 85%"></div>
+<div class="flex-1 bg-secondary rounded-t-sm" style="height: 100%"></div>
+<div class="flex-1 bg-primary/80 rounded-t-sm" style="height: 90%"></div>
+<div class="flex-1 bg-primary/50 rounded-t-sm" style="height: 55%"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm" style="height: 40%"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm" style="height: 25%"></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest/50 p-4 rounded-xl border border-white/5">
+<p class="text-[10px] font-label uppercase text-on-surface-variant/60 mb-1">95% Conf. Interval</p>
+<p class="text-xl font-headline font-bold text-secondary">$842.12 — $1,024.50</p>
+</div>
+<div class="bg-surface-container-lowest/50 p-4 rounded-xl border border-white/5">
+<p class="text-[10px] font-label uppercase text-on-surface-variant/60 mb-1">Expected ROI</p>
+<p class="text-xl font-headline font-bold text-primary">+24.8%</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Benefits -->
+<section class="container mx-auto px-6 py-24">
+<div class="text-center mb-16 space-y-4">
+<h2 class="text-4xl md:text-5xl font-headline font-bold text-on-background">Modernizing the Analyst Workflow</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Excel is a 40-year-old grid. EquiSim Pro is a high-dimensional probability machine designed for the modern market.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Large Feature -->
+<div class="md:col-span-2 glass-card rounded-3xl p-10 flex flex-col justify-between group hover:border-primary/30 transition-colors border border-white/5 overflow-hidden relative">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] -mr-20 -mt-20"></div>
+<div class="relative z-10">
+<span class="material-symbols-outlined text-primary text-5xl mb-6" data-icon="query_stats" style="font-variation-settings: 'FILL' 1;">query_stats</span>
+<h3 class="text-3xl font-headline font-bold mb-4">Probabilistic valuation</h3>
+<p class="text-on-surface-variant text-lg leading-relaxed max-w-lg">Move beyond point estimates. Run tens of thousands of simulations to understand the full distribution of possible outcomes and tail risks.</p>
+</div>
+<div class="mt-12 flex items-center gap-6 relative z-10">
+<div class="flex -space-x-3">
+<img alt="Analyst Profile" class="w-10 h-10 rounded-full border-2 border-surface-container-highest" data-alt="close-up portrait of a young professional analyst smiling in a modern office environment with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_Ii2Je_gm-iAsrEp7o8CLxuiS-GoGRl801sYV9ALY0nMXIUB8tAaeflAtKWJvRbz2jaTmAEE6lcoX9eyvOUIgFv9w9vogx-lNvhSnqKwIWpr_ZnkePdR02tqX8e3z5nQFALlsG1UerLGobf1IdvAFhhJZKvHb592Sy66J6yHNwyJFBa3p0525FX88_T3TucO-nRt1ic9jirykH8pMZF6o38zUwHCeJZ4x3yRhE2So3OFQdhGEisvYUYUXI4sxaXgCA5yvMYhg9lqt"/>
+<img alt="Analyst Profile" class="w-10 h-10 rounded-full border-2 border-surface-container-highest" data-alt="portrait of a confident woman with glasses in a sleek professional setting with cool blue tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfmEY6_P2mOF1jA7Ya0DknQ15ZJ69kHv41F5GWZMVE7QQESc9Hm9C5ys_-JVHm1eu900d-ysuTZkpO1jW3YEuaIVUXBC9MdGK7O0TCgWQcLVyP5cZ8wNefhxUCBJ-LyekU8nBOVNXkFFA6fUHKp96QVHeKmZbVDGQpvzam9t6P2kPiVFTAl449W5lO2Z9AOneZRI6Eg-CzEybuwBUwOcv3qxDHt5-272VyjS3SpOP5i9_nmL6hVNHEfJmB89Mf7g9ClH3QRkUaTC74"/>
+<div class="w-10 h-10 rounded-full border-2 border-surface-container-highest bg-surface-container-highest flex items-center justify-center text-[10px] font-bold text-secondary">+2k</div>
+</div>
+<p class="text-sm font-label text-on-surface-variant/60">Analysts simulating live today</p>
+</div>
+</div>
+<!-- Small Feature 1 -->
+<div class="glass-card rounded-3xl p-10 border border-white/5 group hover:border-secondary/30 transition-colors flex flex-col">
+<span class="material-symbols-outlined text-secondary text-5xl mb-6" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="text-2xl font-headline font-bold mb-4">Automated fetching</h3>
+<p class="text-on-surface-variant font-body">Real-time data pipes directly from SEC filings, earnings calls, and alternative data sources. No more manual entry.</p>
+<div class="mt-auto pt-8">
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4 shadow-[0_0_10px_rgba(93,230,255,0.5)]"></div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] font-label uppercase tracking-widest text-on-surface-variant/40">
+<span>Fetching data</span>
+<span>75%</span>
+</div>
+</div>
+</div>
+<!-- Small Feature 2 -->
+<div class="glass-card rounded-3xl p-10 border border-white/5 group hover:border-tertiary/30 transition-colors flex flex-col">
+<span class="material-symbols-outlined text-tertiary text-5xl mb-6" data-icon="account_tree" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<h3 class="text-2xl font-headline font-bold mb-4">Scenario analysis</h3>
+<p class="text-on-surface-variant font-body">Toggle macro-variables like interest rates, inflation, and market sentiment to see immediate impact across your entire workspace.</p>
+<div class="flex gap-2 mt-auto pt-8">
+<div class="flex-1 h-12 bg-tertiary/10 rounded-lg flex items-center justify-center border border-tertiary/20 text-tertiary text-xs font-bold">Bull</div>
+<div class="flex-1 h-12 bg-surface-container-highest rounded-lg flex items-center justify-center text-on-surface-variant/40 text-xs font-bold">Base</div>
+<div class="flex-1 h-12 bg-surface-container-highest rounded-lg flex items-center justify-center text-on-surface-variant/40 text-xs font-bold">Bear</div>
+</div>
+</div>
+<!-- Large Stats/Social Proof -->
+<div class="md:col-span-2 relative rounded-3xl overflow-hidden min-h-[300px] border border-white/5">
+<img alt="Financial Grid" class="absolute inset-0 w-full h-full object-cover grayscale opacity-30 mix-blend-overlay" data-alt="abstract digital visualization of complex data networks and blockchain structures with glowing nodes and purple light trails" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyKxNy2jNMGSXC2fTcZtFx4MhfTKOB3yHsTZBT3pkH2u-8Yv5lqHl8Lf_nLuih5NoEQbdbvNHTrsI3iTe4zLtvDN_xTHIum9ktJm0Z-4XUghrkbxOQvreqL-WZCJSH6lzslQgNDhQsWCtczHye7qOgiiUwahb69PVH9YxfDZgBk3Wl7n6NvRCYYpznVsVmQP6tQZABcs4_MFF5Q0c1LTiFUYe9VGqGLrgxx4RuGsPc4e74EZ2-ZW0Kx2nYUMymrOGZGZkzTBW2EpsD"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim via-surface-dim/80 to-transparent p-10 flex flex-col justify-end">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<div class="space-y-1">
+<p class="text-4xl font-headline font-bold text-primary">12M+</p>
+<p class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant/60">Simulations Run</p>
+</div>
+<div class="space-y-1">
+<p class="text-4xl font-headline font-bold text-secondary">0.4s</p>
+<p class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant/60">Mean Latency</p>
+</div>
+<div class="space-y-1">
+<p class="text-4xl font-headline font-bold text-on-surface">99.9%</p>
+<p class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant/60">Data Uptime</p>
+</div>
+<div class="space-y-1">
+<p class="text-4xl font-headline font-bold text-tertiary">$4.2B</p>
+<p class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant/60">AUM Simulating</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="container mx-auto px-6 py-24">
+<div class="bg-gradient-to-br from-surface-container-high to-surface-dim rounded-[2.5rem] p-12 md:p-24 text-center relative overflow-hidden border border-white/5">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,rgba(221,183,255,0.15),transparent_60%)]"></div>
+<div class="relative z-10 space-y-8">
+<h2 class="text-5xl md:text-7xl font-headline font-bold text-on-background tracking-tighter">Ready to evolve?</h2>
+<p class="text-xl text-on-surface-variant max-w-xl mx-auto leading-relaxed">Join the top tier of synthetic analysts leveraging probability for alpha. Free for individual analysts. Institutional power for teams.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+<button class="px-12 py-6 bg-secondary text-on-secondary rounded-full font-headline font-bold text-xl hover:shadow-[0_0_40px_rgba(93,230,255,0.3)] transition-all active:scale-95">
+                            Launch Terminal
+                        </button>
+<button class="px-12 py-6 bg-transparent border-2 border-primary/40 text-primary rounded-full font-headline font-bold text-xl hover:bg-primary/5 transition-all">
+                            Talk to Sales
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-[#4d4354]/10 bg-[#070e1d] flex flex-col items-center gap-6 px-4">
+<div class="flex gap-8">
+<a class="text-slate-500 hover:text-[#ddb7ff] font-headline font-bold transition-opacity duration-300" href="#">Privacy</a>
+<a class="text-slate-500 hover:text-[#ddb7ff] font-headline font-bold transition-opacity duration-300" href="#">Terms</a>
+<a class="text-slate-500 hover:text-[#ddb7ff] font-headline font-bold transition-opacity duration-300" href="#">Docs</a>
+<a class="text-slate-500 hover:text-[#ddb7ff] font-headline font-bold transition-opacity duration-300" href="#">Status</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-bold text-[#ddb7ff] font-headline">EquiSim Pro</span>
+<span class="w-px h-4 bg-outline-variant/30"></span>
+<p class="font-['Inter'] text-xs text-slate-500">© 2024 EquiSim Pro. Synthetic Pulse Intelligence.</p>
+</div>
+<div class="flex gap-4 mt-4">
+<span class="material-symbols-outlined text-slate-500 hover:text-secondary cursor-pointer" data-icon="terminal">terminal</span>
+<span class="material-symbols-outlined text-slate-500 hover:text-secondary cursor-pointer" data-icon="monitoring">monitoring</span>
+<span class="material-symbols-outlined text-slate-500 hover:text-secondary cursor-pointer" data-icon="language">language</span>
+</div>
+</footer>
+</body></html>

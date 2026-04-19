@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EquiSim Pro | Company Search &amp; Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#a2eeff",
+                      "tertiary-fixed": "#ffdead",
+                      "surface-container-highest": "#2e3545",
+                      "on-primary-fixed": "#2c0051",
+                      "secondary-container": "#00cbe6",
+                      "on-tertiary-fixed": "#281900",
+                      "surface-tint": "#ddb7ff",
+                      "secondary-fixed-dim": "#2fd9f4",
+                      "tertiary": "#fabc4e",
+                      "on-surface-variant": "#cfc2d6",
+                      "error-container": "#93000a",
+                      "tertiary-container": "#bd871a",
+                      "on-secondary": "#00363e",
+                      "surface-container-lowest": "#070e1d",
+                      "on-primary-fixed-variant": "#6900b3",
+                      "inverse-primary": "#842bd2",
+                      "on-error": "#690005",
+                      "surface-dim": "#0c1322",
+                      "outline": "#988d9f",
+                      "on-secondary-fixed-variant": "#004e5a",
+                      "primary-fixed": "#f0dbff",
+                      "on-surface": "#dce2f7",
+                      "surface-container-high": "#232a3a",
+                      "background": "#0c1322",
+                      "tertiary-fixed-dim": "#fabc4e",
+                      "on-tertiary-container": "#3a2600",
+                      "on-background": "#dce2f7",
+                      "surface-container-low": "#141b2b",
+                      "on-secondary-container": "#00515d",
+                      "outline-variant": "#4d4354",
+                      "inverse-surface": "#dce2f7",
+                      "on-error-container": "#ffdad6",
+                      "primary": "#ddb7ff",
+                      "on-secondary-fixed": "#001f25",
+                      "on-primary": "#490080",
+                      "on-primary-container": "#400071",
+                      "surface-container": "#191f2f",
+                      "surface-bright": "#323949",
+                      "inverse-on-surface": "#293040",
+                      "on-tertiary": "#432c00",
+                      "surface": "#0c1322",
+                      "primary-fixed-dim": "#ddb7ff",
+                      "secondary": "#5de6ff",
+                      "primary-container": "#b76dff",
+                      "surface-variant": "#2e3545",
+                      "on-tertiary-fixed-variant": "#604100",
+                      "error": "#ffb4ab"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Space Grotesk"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(46, 53, 69, 0.4);
+            backdrop-filter: blur(20px);
+        }
+        .neon-trail-cyan {
+            filter: drop-shadow(0 0 4px #5de6ff);
+        }
+        .neon-trail-purple {
+            filter: drop-shadow(0 0 4px #ddb7ff);
+        }
+      </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<div class="flex min-h-screen">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="hidden lg:flex flex-col h-screen w-64 border-r border-outline-variant/20 bg-[#0c1322] py-8 space-y-4 fixed left-0 top-0">
+<div class="px-6 mb-8">
+<div class="font-black text-secondary font-headline text-xl tracking-tighter italic">EquiSim Pro</div>
+<div class="font-headline uppercase tracking-widest text-[10px] text-slate-400 mt-1">Probabilistic Terminal</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-primary hover:bg-[#191f2f] transition-all duration-300 rounded-lg group" href="dashboard.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-headline uppercase tracking-widest text-[10px] group-hover:translate-x-1 transition-transform">Dashboard</span>
+</a>
+<!-- Search (Active State) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary/20 to-transparent text-primary border-l-4 border-primary transition-all duration-300 rounded-r-lg group" href="company.html">
+<span class="material-symbols-outlined" data-icon="search" style="font-variation-settings: 'FILL' 1;">search</span>
+<span class="font-headline uppercase tracking-widest text-[10px] group-hover:translate-x-1 transition-transform">Search</span>
+</a>
+<!-- Workspace -->
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-primary hover:bg-[#191f2f] transition-all duration-300 rounded-lg group" href="simulation.html">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-headline uppercase tracking-widest text-[10px] group-hover:translate-x-1 transition-transform">Workspace</span>
+</a>
+<!-- Monte Carlo -->
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-primary hover:bg-[#191f2f] transition-all duration-300 rounded-lg group" href="simulation.html">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-headline uppercase tracking-widest text-[10px] group-hover:translate-x-1 transition-transform">Monte Carlo</span>
+</a>
+<!-- Reports -->
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-primary hover:bg-[#191f2f] transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-headline uppercase tracking-widest text-[10px] group-hover:translate-x-1 transition-transform">Reports</span>
+</a>
+</nav>
+<div class="px-6 py-4">
+<button class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-bold rounded-xl text-xs uppercase tracking-widest shadow-[0_0_20px_rgba(221,183,255,0.3)] active:scale-95 transition-all">
+                    Run Simulation
+                </button>
+</div>
+<div class="px-3 pt-4 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span class="font-headline uppercase tracking-widest text-[9px]">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="code">code</span>
+<span class="font-headline uppercase tracking-widest text-[9px]">API Docs</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:ml-64 p-6 lg:p-10">
+<!-- Header/Search Area -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div class="max-w-xl">
+<h1 class="font-headline text-5xl font-bold tracking-tighter text-on-surface mb-2">Market <span class="text-secondary italic">Intelligence</span></h1>
+<p class="text-on-surface-variant font-body text-sm leading-relaxed">Execute deep-shell analysis on global equities. Enter tickers to synthesize financial health and probabilistic outcomes.</p>
+</div>
+<div class="relative group w-full md:w-96">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+</div>
+<input class="w-full bg-surface-container-lowest border-outline-variant/20 focus:border-secondary focus:ring-1 focus:ring-secondary rounded-xl pl-12 py-4 text-on-surface font-headline tracking-wide transition-all placeholder:text-outline/50" id="search-input" placeholder="Enter Ticker (e.g. AAPL, TLKM.JK, BBCA.JK)" type="text" autocomplete="off"/>
+  <div id="search-dropdown" class="hidden absolute top-full left-0 right-0 mt-2 bg-[#141b2b] border border-outline-variant/20 rounded-xl overflow-hidden shadow-2xl z-50 max-h-72 overflow-y-auto"></div>
+</div>
+</header>
+<!-- Loading State -->
+<div id="loading-state" class="hidden flex flex-col items-center justify-center py-32 gap-6">
+  <div class="w-16 h-16 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
+  <p class="font-headline text-on-surface-variant uppercase tracking-widest text-xs">Fetching market data...</p>
+</div>
+<!-- Company Overview (Asymmetrical Layout) -->
+<section id="company-section" class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 transition-opacity duration-300">
+<!-- Left: Hero Card -->
+<div class="lg:col-span-8 flex flex-col gap-8">
+<div class="glass-card rounded-xl p-8 border border-outline-variant/10 relative overflow-hidden">
+<!-- Background Glow Decorative -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-secondary/10 blur-[100px] rounded-full"></div>
+<div class="flex flex-wrap items-start justify-between gap-6 relative z-10">
+<div class="flex items-center gap-6">
+<div class="w-20 h-20 rounded-2xl bg-surface-container-highest flex items-center justify-center p-2 border border-outline-variant/20 shadow-xl overflow-hidden">
+<img class="w-full h-full object-contain" data-alt="Corporate logo of a telecommunications giant with modern abstract minimalist aesthetic blue and white color palette" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlJOHhm6NeljQbMZBvQVkwkHLgVJNgFTI3xosdnZM1bMqfGO-45p_LRpTwI1xEjtgnFf5xdcNXXGNOyEHLJXAHMkukFhXhiEWvsg5eq_llJXeB3Dtnm9jUyW8LyIEq1yZ30yu5fgTK2QlO7KNsyRLGF61dOAhdvDxV6_IYYSrFCkNQgkP-1IarCXCi1dqBJLInTUX7BA-CjzJ2mfQ-YHoVZydmBevXqNER-Mo5V104Z_T6Nkmguk4ZKSEJtV2hoQITYFP-dfaC1jz3"/>
+</div>
+<div>
+<div class="flex items-center gap-3">
+<h2 class="font-headline text-3xl font-bold text-on-surface" id="company-name">Telkom Indonesia</h2>
+<span class="px-2 py-0.5 bg-secondary-container/20 text-secondary text-[10px] font-bold rounded-md uppercase tracking-wider" id="company-ticker">TLKM.JK</span>
+</div>
+<p class="text-on-surface-variant text-sm font-body mt-1" id="company-description">Telecommunications Service Provider • Jakarta, ID</p>
+</div>
+</div>
+<div class="text-right">
+<div class="font-headline text-4xl font-bold text-on-surface" id="company-price">IDR 3,920.00</div>
+<div id="price-change" class="flex items-center justify-end gap-2 text-secondary font-medium"><span class="material-symbols-outlined text-sm">trending_up</span><span id="price-change-text">+2.45% (Today)</span></div>
+</div>
+</div>
+<!-- Main Asset Chart Pulse -->
+<div class="mt-12 h-64 w-full relative">
+<!-- Visual placeholder for a high-end neon chart -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 200">
+<defs>
+<lineargradient id="gradient-cyan" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#5de6ff" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#5de6ff" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path class="neon-trail-cyan" d="M0,180 Q100,160 200,175 T400,140 T600,100 T800,110 T1000,40" fill="transparent" stroke="#5de6ff" stroke-width="4"></path>
+<path d="M0,180 Q100,160 200,175 T400,140 T600,100 T800,110 T1000,40 L1000,200 L0,200 Z" fill="url(#gradient-cyan)"></path>
+</svg>
+<div class="absolute inset-0 flex justify-between items-end pb-2 px-2 text-[10px] font-headline uppercase tracking-widest text-slate-500 pointer-events-none">
+<span>2019</span>
+<span>2020</span>
+<span>2021</span>
+<span>2022</span>
+<span>2023</span>
+<span class="text-secondary">Present</span>
+</div>
+</div>
+</div>
+<!-- Key Performance Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-high rounded-xl p-6 border border-outline-variant/5">
+<label class="font-headline uppercase tracking-widest text-[10px] text-slate-500 block mb-4">Revenue (TTM)</label><div id="revenue-ttm" class="font-headline text-2xl font-bold">147.3T</div><div id="revenue-chart" class="mt-4 h-12 flex items-end gap-1"><div class="flex-1 bg-primary/20 h-[40%] rounded-sm"></div><div class="flex-1 bg-primary/20 h-[60%] rounded-sm"></div><div class="flex-1 bg-primary/20 h-[55%] rounded-sm"></div><div class="flex-1 bg-primary/20 h-[80%] rounded-sm"></div><div class="flex-1 bg-primary h-full rounded-sm shadow-[0_0_10px_#ddb7ff]"></div></div>
+</div>
+<div class="bg-surface-container-high rounded-xl p-6 border border-outline-variant/5">
+<label class="font-headline uppercase tracking-widest text-[10px] text-slate-500 block mb-4">EBITDA Margin</label><div id="ebitda-margin" class="font-headline text-2xl font-bold">52.4%</div>
+<div class="mt-4 h-12 flex items-end gap-1">
+<div class="flex-1 bg-secondary/20 h-[70%] rounded-sm"></div>
+<div class="flex-1 bg-secondary/20 h-[75%] rounded-sm"></div>
+<div class="flex-1 bg-secondary/20 h-[72%] rounded-sm"></div>
+<div class="flex-1 bg-secondary/20 h-[78%] rounded-sm"></div>
+<div class="flex-1 bg-secondary h-[80%] rounded-sm shadow-[0_0_10px_#5de6ff]"></div>
+</div>
+</div>
+<div class="bg-surface-container-high rounded-xl p-6 border border-outline-variant/5">
+<label class="font-headline uppercase tracking-widest text-[10px] text-slate-500 block mb-4">Net Income</label><div id="net-income" class="font-headline text-2xl font-bold">25.8T</div><div id="netincome-chart" class="mt-4 h-12 flex items-end gap-1"><div class="flex-1 bg-tertiary/20 h-[30%] rounded-sm"></div><div class="flex-1 bg-tertiary/20 h-[45%] rounded-sm"></div><div class="flex-1 bg-tertiary/20 h-[40%] rounded-sm"></div><div class="flex-1 bg-tertiary/20 h-[60%] rounded-sm"></div><div class="flex-1 bg-tertiary h-[65%] rounded-sm shadow-[0_0_10px_#fabc4e]"></div></div>
+</div>
+</div>
+</div>
+<!-- Right: Market Summary & Stats -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container rounded-xl p-6 border border-outline-variant/10">
+<h3 class="font-headline font-bold text-lg mb-6">Market Snapshot</h3>
+<div class="space-y-6">
+<div class="flex justify-between items-center pb-4 border-b border-outline-variant/10">
+<span class="font-body text-sm text-on-surface-variant">Market Cap</span>
+<span class="font-headline font-bold text-on-surface" id="market-cap">388.31T</span>
+</div>
+<div class="flex justify-between items-center pb-4 border-b border-outline-variant/10">
+<span class="font-body text-sm text-on-surface-variant">P/E Ratio</span>
+<span class="font-headline font-bold text-on-surface" id="pe-ratio">15.05</span>
+</div>
+<div class="flex justify-between items-center pb-4 border-b border-outline-variant/10">
+<span class="font-body text-sm text-on-surface-variant">Div Yield</span>
+<span class="font-headline font-bold text-on-surface" id="div-yield">4.28%</span>
+</div>
+<div class="flex justify-between items-center pb-4 border-b border-outline-variant/10">
+<span class="font-body text-sm text-on-surface-variant">Beta (5Y)</span>
+<span class="font-headline font-bold text-on-surface" id="beta">0.68</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body text-sm text-on-surface-variant">Volume</span>
+<span class="font-headline font-bold text-on-surface" id="volume">104.2M</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-surface-container-highest to-surface-container rounded-xl p-6 border border-outline-variant/10 group cursor-pointer hover:border-primary/40 transition-colors">
+<div class="flex items-center gap-4 mb-4">
+<div class="p-3 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+</div>
+<h3 class="font-headline font-bold">Simulate Forecast</h3>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed mb-6"><span id="sim-desc">Search for a company above to run Monte Carlo simulation.</span></p>
+<button onclick="window.location.href='simulation.html'" class="w-full py-3 bg-surface-container-lowest border border-primary/30 text-primary font-headline text-xs font-bold rounded-xl uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all">Configure Parameters</button>
+</div>
+</div>
+</section>
+<!-- News & Insights (Asymmetric List) -->
+<section class="mt-16">
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-headline text-2xl font-bold tracking-tight">Recent <span class="text-primary">Signals</span></h2>
+<button class="text-secondary text-sm font-headline font-bold uppercase tracking-widest flex items-center gap-2">
+                        View All News <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex gap-6 items-center p-4 rounded-xl hover:bg-surface-container/50 transition-all border border-transparent hover:border-outline-variant/10">
+<div class="w-32 h-24 flex-shrink-0 rounded-lg overflow-hidden grayscale hover:grayscale-0 transition-all">
+<img class="w-full h-full object-cover" data-alt="Cybersecurity data center with blue glowing lights and server racks digital infrastructure photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAUZjVL2E7LKFmk6Ie8XkmmiVWNETlElhJCJL9oXPIxfcfR0JrKo6PqrJp5AvaevPU24fHrRXoVh4cexjdghtz5HUGuDhqyGIsSIOI_mPk9c7jVwYG4T-ldRytytqSXDoPoA17aG4gwysTgJcvDwPlsCdi4HM_ozRPk9qPKLICzzV_hEAwSpmRxCOyV4HrHjFY3loGc9tjN9MwBRd57kd6lNWJlUA-O6-2vimUMz8dd_ecALN1HxYNSlTMEIjjsu1OatWV4mukrS2P"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-[10px] font-headline font-bold uppercase tracking-widest text-secondary">Tech Expansion</span>
+<span class="text-[10px] font-body text-slate-500">2h ago</span>
+</div>
+<h4 class="font-headline font-bold text-on-surface group-hover:text-secondary transition-colors">Telkom expands data center footprint in Batam to target Singapore market.</h4>
+</div>
+</div>
+<div class="flex gap-6 items-center p-4 rounded-xl hover:bg-surface-container/50 transition-all border border-transparent hover:border-outline-variant/10">
+<div class="w-32 h-24 flex-shrink-0 rounded-lg overflow-hidden grayscale hover:grayscale-0 transition-all">
+<img class="w-full h-full object-cover" data-alt="Stock market trading screen with candlesticks and financial indicators close up macro photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeZ_AyUQRoMvY-igXI6s0EPJR9wZ4qiNzV1jgx77G-GKad6nH_VT4oW8GpN9tiWHWnXIcdLZcvdeW1EAQSswo25bfDnYQvhdoToXY6by-jF8Ev0wYXqspUGOVDnhK3Q06iuqEZgsZ_sCS4Zu_67WVxbDmYMiSjqNxpRRw5hsxk-u7ymGsgiIq5wm4XasW48C7qA_4LfjDzaCL4Wk883Jpr51EKx4dmEEVI1YaV7W2F4r3pyr6r8iJ2ClZPyBxDidx4wyf6ZcakBGxd"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-[10px] font-headline font-bold uppercase tracking-widest text-primary">Earnings Report</span>
+<span class="text-[10px] font-body text-slate-500">5h ago</span>
+</div>
+<h4 class="font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Q3 Results: Core profit grows 4% as mobile data demand surges across archipelago.</h4>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer (Authority: JSON) -->
+<footer class="bg-[#070e1d] w-full py-12 border-t border-outline-variant/10 flex flex-col items-center gap-6 px-4 lg:ml-64 lg:w-[calc(100%-16rem)]">
+<div class="font-bold text-primary font-headline text-xl tracking-tighter">EquiSim Pro</div>
+<div class="flex gap-8">
+<a class="font-body text-xs text-slate-500 hover:text-secondary hover:underline decoration-secondary transition-all" href="#">Privacy</a>
+<a class="font-body text-xs text-slate-500 hover:text-secondary hover:underline decoration-secondary transition-all" href="#">Terms</a>
+<a class="font-body text-xs text-slate-500 hover:text-secondary hover:underline decoration-secondary transition-all" href="#">Docs</a>
+<a class="font-body text-xs text-slate-500 hover:text-secondary hover:underline decoration-secondary transition-all" href="#">Status</a>
+</div>
+<div class="font-body text-xs text-slate-500 opacity-60">© 2024 EquiSim Pro. Synthetic Pulse Intelligence.</div>
+</footer>
+
+<script>
+(function() {
+  var PROXY = 'https://api.allorigins.win/raw?url=';
+  function px(url) { return PROXY + encodeURIComponent(url); }
+  function fmt(n) {
+    if (n == null || isNaN(n)) return '\u2014';
+    var a = Math.abs(n);
+    if (a >= 1e12) return (n/1e12).toFixed(2) + 'T';
+    if (a >= 1e9)  return (n/1e9).toFixed(2) + 'B';
+    if (a >= 1e6)  return (n/1e6).toFixed(2) + 'M';
+    if (a >= 1e3)  return (n/1e3).toFixed(1) + 'K';
+    return n.toFixed(2);
+  }
+  function fmtP(n) { return n == null ? '\u2014' : (n*100).toFixed(2) + '%'; }
+  function set(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+
+  async function doSearch(q) {
+    try {
+      var url = 'https://query1.finance.yahoo.com/v1/finance/search?q=' + encodeURIComponent(q) + '&quotesCount=7&newsCount=0&enableFuzzyQuery=true';
+      var r = await fetch(px(url));
+      var d = await r.json();
+      return (d.quotes || []).filter(function(x){ return x.quoteType === 'EQUITY'; });
+    } catch(e) { return []; }
+  }
+
+  async function fetchData(ticker) {
+    var mods = 'price,summaryDetail,financialData,assetProfile,incomeStatementHistory';
+    var url = 'https://query2.finance.yahoo.com/v10/finance/quoteSummary/' + ticker + '?modules=' + mods;
+    var r = await fetch(px(url));
+    var d = await r.json();
+    var res = d && d.quoteSummary && d.quoteSummary.result && d.quoteSummary.result[0];
+    if (!res) throw new Error('No data');
+    return res;
+  }
+
+  function renderChart(id, vals, color, dimColor) {
+    var el = document.getElementById(id);
+    if (!el || !vals.length) return;
+    var max = Math.max.apply(null, vals.map(Math.abs).concat([1]));
+    el.innerHTML = vals.map(function(v, i) {
+      var h = Math.max(8, Math.round(Math.abs(v) / max * 100));
+      var last = i === vals.length - 1;
+      var glow = last ? 'box-shadow:0 0 10px ' + color + ';' : '';
+      return '<div class="flex-1 rounded-sm" style="height:' + h + '%;background:' + (last ? color : dimColor) + ';' + glow + '"></div>';
+    }).join('');
+  }
+
+  function renderCompany(d, ticker) {
+    var pr = d.price || {}, sd = d.summaryDetail || {};
+    var fd = d.financialData || {}, ap = d.assetProfile || {};
+    var inc = ((d.incomeStatementHistory || {}).incomeStatementHistory || []).slice().reverse();
+    var cur = pr.currency || '';
+    var name = pr.longName || pr.shortName || ticker;
+    var price = pr.regularMarketPrice && pr.regularMarketPrice.raw;
+    var chg = pr.regularMarketChangePercent && pr.regularMarketChangePercent.raw;
+    var loc = [ap.city, ap.country].filter(Boolean).join(', ');
+    set('company-name', name);
+    set('company-ticker', ticker);
+    set('company-description', [(ap.industry || ap.sector), loc].filter(Boolean).join(' \u2022 ') || 'Equity');
+    set('company-price', price != null ? cur + ' ' + price.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}) : '\u2014');
+    var changeEl = document.getElementById('price-change');
+    if (changeEl && chg != null) {
+      var pos = chg >= 0;
+      var icon = changeEl.querySelector('.material-symbols-outlined');
+      if (icon) icon.textContent = pos ? 'trending_up' : 'trending_down';
+      var txt = document.getElementById('price-change-text');
+      if (txt) txt.textContent = (pos ? '+' : '') + (chg*100).toFixed(2) + '% (Today)';
+      changeEl.className = changeEl.className.replace(/text-(secondary|error)/g, pos ? 'text-secondary' : 'text-error');
+    }
+    set('revenue-ttm', fmt(fd.totalRevenue && fd.totalRevenue.raw));
+    set('ebitda-margin', fmtP(fd.ebitdaMargins && fd.ebitdaMargins.raw));
+    set('net-income', fmt(fd.netIncomeToCommon && fd.netIncomeToCommon.raw));
+    set('market-cap', pr.marketCap && pr.marketCap.raw ? fmt(pr.marketCap.raw) : '\u2014');
+    set('pe-ratio', sd.trailingPE && sd.trailingPE.raw ? sd.trailingPE.raw.toFixed(2) : '\u2014');
+    set('div-yield', sd.dividendYield && sd.dividendYield.raw ? fmtP(sd.dividendYield.raw) : '\u2014');
+    set('beta', sd.beta && sd.beta.raw ? sd.beta.raw.toFixed(2) : '\u2014');
+    set('volume', pr.regularMarketVolume && pr.regularMarketVolume.raw ? fmt(pr.regularMarketVolume.raw) : '\u2014');
+    if (inc.length) {
+      renderChart('revenue-chart', inc.map(function(s){ return (s.totalRevenue && s.totalRevenue.raw) || 0; }), '#ddb7ff', 'rgba(221,183,255,0.2)');
+      renderChart('netincome-chart', inc.map(function(s){ return (s.netIncome && s.netIncome.raw) || 0; }), '#fabc4e', 'rgba(250,188,78,0.2)');
+    }
+    var sd2 = document.getElementById('sim-desc');
+    if (sd2) sd2.textContent = 'Utilize Monte Carlo engines to predict ' + ticker + ' volatility over next 12 months based on historical pulse.';
+    localStorage.setItem('equisim_ticker', ticker);
+    localStorage.setItem('equisim_company', name);
+    document.getElementById('loading-state').classList.add('hidden');
+    var cs = document.getElementById('company-section');
+    cs.classList.remove('opacity-0', 'pointer-events-none');
+  }
+
+  function showDropdown(results) {
+    var dd = document.getElementById('search-dropdown');
+    if (!dd) return;
+    if (!results.length) { dd.classList.add('hidden'); return; }
+    dd.innerHTML = results.map(function(r) {
+      return '<button class="w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-container text-left transition-colors border-b border-outline-variant/10 last:border-0" onclick="window.selectTicker(\'' + r.symbol + '\')">' +
+        '<div class="flex-1 min-w-0"><div class="font-headline text-sm font-bold text-on-surface">' + r.symbol + '</div>' +
+        '<div class="font-body text-xs text-on-surface-variant truncate">' + (r.shortname || r.longname || '') + '</div></div>' +
+        '<div class="text-[10px] font-headline uppercase tracking-widest text-outline shrink-0">' + (r.exchDisp || r.exchange || '') + '</div></button>';
+    }).join('');
+    dd.classList.remove('hidden');
+  }
+
+  window.selectTicker = async function(ticker) {
+    var input = document.getElementById('search-input');
+    if (input) input.value = ticker;
+    var dd = document.getElementById('search-dropdown');
+    if (dd) dd.classList.add('hidden');
+    document.getElementById('loading-state').classList.remove('hidden');
+    var cs = document.getElementById('company-section');
+    cs.classList.add('opacity-0', 'pointer-events-none');
+    try {
+      var data = await fetchData(ticker);
+      renderCompany(data, ticker);
+    } catch(err) {
+      document.getElementById('loading-state').classList.add('hidden');
+      cs.classList.remove('opacity-0', 'pointer-events-none');
+      set('company-name', 'Failed to load data for ' + ticker);
+    }
+  };
+
+  var timer;
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('search-input');
+    var dd = document.getElementById('search-dropdown');
+    if (!input) return;
+    input.addEventListener('input', function() {
+      clearTimeout(timer);
+      var q = this.value.trim();
+      if (!q) { if (dd) dd.classList.add('hidden'); return; }
+      timer = setTimeout(async function() { showDropdown(await doSearch(q)); }, 350);
+    });
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && this.value.trim()) window.selectTicker(this.value.trim().toUpperCase());
+    });
+    document.addEventListener('click', function(e) {
+      if (input && !input.contains(e.target) && dd && !dd.contains(e.target)) dd.classList.add('hidden');
+    });
+  });
+})();
+</script>
+</body></html>

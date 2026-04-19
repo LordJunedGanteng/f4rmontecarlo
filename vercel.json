@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/company", "dest": "/company.html" },
+    { "src": "/simulation", "dest": "/simulation.html" },
+    { "src": "/dashboard", "dest": "/dashboard.html" }
+  ]
+}
