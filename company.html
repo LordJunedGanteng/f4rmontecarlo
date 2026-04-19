@@ -321,10 +321,25 @@
 <div class="font-body text-xs text-slate-500 opacity-60">© 2024 EquiSim Pro. Synthetic Pulse Intelligence.</div>
 </footer>
 
+
 <script>
-(function() {
-  var PROXY = 'https://api.allorigins.win/raw?url=';
-  function px(url) { return PROXY + encodeURIComponent(url); }
+(function(){
+  // Try corsproxy.io first, fall back to allorigins
+  var PROXIES = [
+    function(u){ return 'https://corsproxy.io/?' + encodeURIComponent(u); },
+    function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
+  ];
+
+  async function proxyFetch(url) {
+    for (var i = 0; i < PROXIES.length; i++) {
+      try {
+        var r = await fetch(PROXIES[i](url), {signal: AbortSignal.timeout(8000)});
+        if (r.ok) return r;
+      } catch(e) { /* try next */ }
+    }
+    throw new Error('All proxies failed');
+  }
+
   function fmt(n) {
     if (n == null || isNaN(n)) return '\u2014';
     var a = Math.abs(n);
@@ -337,23 +352,39 @@
   function fmtP(n) { return n == null ? '\u2014' : (n*100).toFixed(2) + '%'; }
   function set(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
 
+  // ── Search autocomplete ──────────────────────────────────────────────────
   async function doSearch(q) {
     try {
-      var url = 'https://query1.finance.yahoo.com/v1/finance/search?q=' + encodeURIComponent(q) + '&quotesCount=7&newsCount=0&enableFuzzyQuery=true';
-      var r = await fetch(px(url));
+      var url = 'https://query1.finance.yahoo.com/v1/finance/search?q='
+        + encodeURIComponent(q) + '&quotesCount=7&newsCount=0&enableFuzzyQuery=true&lang=en-US';
+      var r = await proxyFetch(url);
       var d = await r.json();
       return (d.quotes || []).filter(function(x){ return x.quoteType === 'EQUITY'; });
     } catch(e) { return []; }
   }
 
-  async function fetchData(ticker) {
-    var mods = 'price,summaryDetail,financialData,assetProfile,incomeStatementHistory';
-    var url = 'https://query2.finance.yahoo.com/v10/finance/quoteSummary/' + ticker + '?modules=' + mods;
-    var r = await fetch(px(url));
+  // ── Market data: v7/quote (reliable, no crumb) ───────────────────────────
+  async function fetchQuote(ticker) {
+    var url = 'https://query1.finance.yahoo.com/v7/finance/quote?symbols='
+      + encodeURIComponent(ticker) + '&fields=longName,shortName,regularMarketPrice,regularMarketChangePercent,marketCap,trailingPE,dividendYield,beta,regularMarketVolume,financialCurrency,sector,industry,city,country';
+    var r = await proxyFetch(url);
     var d = await r.json();
-    var res = d && d.quoteSummary && d.quoteSummary.result && d.quoteSummary.result[0];
-    if (!res) throw new Error('No data');
-    return res;
+    var q = d && d.quoteResponse && d.quoteResponse.result && d.quoteResponse.result[0];
+    if (!q) throw new Error('Quote not found');
+    return q;
+  }
+
+  // ── Financials: quoteSummary with corsDomain trick ────────────────────────
+  async function fetchFinancials(ticker) {
+    try {
+      var url = 'https://query1.finance.yahoo.com/v10/finance/quoteSummary/'
+        + encodeURIComponent(ticker)
+        + '?modules=financialData,assetProfile,incomeStatementHistory&corsDomain=finance.yahoo.com&formatted=false';
+      var r = await proxyFetch(url);
+      var d = await r.json();
+      var res = d && d.quoteSummary && d.quoteSummary.result && d.quoteSummary.result[0];
+      return res || null;
+    } catch(e) { return null; }
   }
 
   function renderChart(id, vals, color, dimColor) {
@@ -368,58 +399,86 @@
     }).join('');
   }
 
-  function renderCompany(d, ticker) {
-    var pr = d.price || {}, sd = d.summaryDetail || {};
-    var fd = d.financialData || {}, ap = d.assetProfile || {};
-    var inc = ((d.incomeStatementHistory || {}).incomeStatementHistory || []).slice().reverse();
-    var cur = pr.currency || '';
-    var name = pr.longName || pr.shortName || ticker;
-    var price = pr.regularMarketPrice && pr.regularMarketPrice.raw;
-    var chg = pr.regularMarketChangePercent && pr.regularMarketChangePercent.raw;
-    var loc = [ap.city, ap.country].filter(Boolean).join(', ');
+  function renderCompany(quote, fin, ticker) {
+    var cur  = quote.financialCurrency || '';
+    var name = quote.longName || quote.shortName || ticker;
+    var price = quote.regularMarketPrice;
+    var chg   = quote.regularMarketChangePercent;
+
+    // Header
     set('company-name', name);
     set('company-ticker', ticker);
-    set('company-description', [(ap.industry || ap.sector), loc].filter(Boolean).join(' \u2022 ') || 'Equity');
-    set('company-price', price != null ? cur + ' ' + price.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}) : '\u2014');
+    var loc = [quote.city, quote.country].filter(Boolean).join(', ');
+    set('company-description', [(quote.industry || quote.sector), loc].filter(Boolean).join(' \u2022 ') || 'Equity');
+
+    // Price
+    set('company-price', price != null
+      ? cur + ' ' + price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})
+      : '\u2014');
+
+    // Change
     var changeEl = document.getElementById('price-change');
     if (changeEl && chg != null) {
       var pos = chg >= 0;
       var icon = changeEl.querySelector('.material-symbols-outlined');
       if (icon) icon.textContent = pos ? 'trending_up' : 'trending_down';
       var txt = document.getElementById('price-change-text');
-      if (txt) txt.textContent = (pos ? '+' : '') + (chg*100).toFixed(2) + '% (Today)';
+      if (txt) txt.textContent = (pos?'+':'') + (chg).toFixed(2) + '% (Today)';
       changeEl.className = changeEl.className.replace(/text-(secondary|error)/g, pos ? 'text-secondary' : 'text-error');
     }
-    set('revenue-ttm', fmt(fd.totalRevenue && fd.totalRevenue.raw));
-    set('ebitda-margin', fmtP(fd.ebitdaMargins && fd.ebitdaMargins.raw));
-    set('net-income', fmt(fd.netIncomeToCommon && fd.netIncomeToCommon.raw));
-    set('market-cap', pr.marketCap && pr.marketCap.raw ? fmt(pr.marketCap.raw) : '\u2014');
-    set('pe-ratio', sd.trailingPE && sd.trailingPE.raw ? sd.trailingPE.raw.toFixed(2) : '\u2014');
-    set('div-yield', sd.dividendYield && sd.dividendYield.raw ? fmtP(sd.dividendYield.raw) : '\u2014');
-    set('beta', sd.beta && sd.beta.raw ? sd.beta.raw.toFixed(2) : '\u2014');
-    set('volume', pr.regularMarketVolume && pr.regularMarketVolume.raw ? fmt(pr.regularMarketVolume.raw) : '\u2014');
-    if (inc.length) {
-      renderChart('revenue-chart', inc.map(function(s){ return (s.totalRevenue && s.totalRevenue.raw) || 0; }), '#ddb7ff', 'rgba(221,183,255,0.2)');
-      renderChart('netincome-chart', inc.map(function(s){ return (s.netIncome && s.netIncome.raw) || 0; }), '#fabc4e', 'rgba(250,188,78,0.2)');
+
+    // Market snapshot (from v7/quote)
+    set('market-cap', quote.marketCap ? fmt(quote.marketCap) : '\u2014');
+    set('pe-ratio',   quote.trailingPE ? quote.trailingPE.toFixed(2) : '\u2014');
+    set('div-yield',  quote.dividendYield ? fmtP(quote.dividendYield) : '\u2014');
+    set('beta',       quote.beta ? quote.beta.toFixed(2) : '\u2014');
+    set('volume',     quote.regularMarketVolume ? fmt(quote.regularMarketVolume) : '\u2014');
+
+    // Financials (from quoteSummary if available)
+    if (fin) {
+      var fd = fin.financialData || {};
+      var ap = fin.assetProfile || {};
+      var inc = ((fin.incomeStatementHistory||{}).incomeStatementHistory||[]).slice().reverse();
+
+      set('revenue-ttm',  fmt(fd.totalRevenue && fd.totalRevenue.raw));
+      set('ebitda-margin', fmtP(fd.ebitdaMargins && fd.ebitdaMargins.raw));
+      set('net-income',   fmt(fd.netIncomeToCommon && fd.netIncomeToCommon.raw));
+
+      // Override description with richer assetProfile data
+      if (ap.sector || ap.industry) {
+        var richLoc = [ap.city, ap.country].filter(Boolean).join(', ');
+        set('company-description', [(ap.industry||ap.sector), richLoc].filter(Boolean).join(' \u2022 '));
+      }
+
+      if (inc.length) {
+        renderChart('revenue-chart',   inc.map(function(s){return (s.totalRevenue&&s.totalRevenue.raw)||0;}), '#ddb7ff','rgba(221,183,255,0.2)');
+        renderChart('netincome-chart', inc.map(function(s){return (s.netIncome&&s.netIncome.raw)||0;}),       '#fabc4e','rgba(250,188,78,0.2)');
+      }
     }
-    var sd2 = document.getElementById('sim-desc');
-    if (sd2) sd2.textContent = 'Utilize Monte Carlo engines to predict ' + ticker + ' volatility over next 12 months based on historical pulse.';
+
+    // Sim desc + localStorage
+    var sd = document.getElementById('sim-desc');
+    if (sd) sd.textContent = 'Utilize Monte Carlo engines to predict ' + ticker + ' volatility over next 12 months based on historical pulse.';
     localStorage.setItem('equisim_ticker', ticker);
     localStorage.setItem('equisim_company', name);
+
     document.getElementById('loading-state').classList.add('hidden');
     var cs = document.getElementById('company-section');
-    cs.classList.remove('opacity-0', 'pointer-events-none');
+    cs.classList.remove('opacity-0','pointer-events-none');
   }
 
   function showDropdown(results) {
     var dd = document.getElementById('search-dropdown');
     if (!dd) return;
     if (!results.length) { dd.classList.add('hidden'); return; }
-    dd.innerHTML = results.map(function(r) {
-      return '<button class="w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-container text-left transition-colors border-b border-outline-variant/10 last:border-0" onclick="window.selectTicker(\'' + r.symbol + '\')">' +
-        '<div class="flex-1 min-w-0"><div class="font-headline text-sm font-bold text-on-surface">' + r.symbol + '</div>' +
-        '<div class="font-body text-xs text-on-surface-variant truncate">' + (r.shortname || r.longname || '') + '</div></div>' +
-        '<div class="text-[10px] font-headline uppercase tracking-widest text-outline shrink-0">' + (r.exchDisp || r.exchange || '') + '</div></button>';
+    dd.innerHTML = results.map(function(r){
+      var sym  = (r.symbol||'').replace(/'/g,"\\'");
+      var name = (r.shortname||r.longname||'').replace(/</g,'&lt;');
+      var exch = (r.exchDisp||r.exchange||'').replace(/</g,'&lt;');
+      return '<button class="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#191f2f] text-left transition-colors border-b border-[#4d4354]/20 last:border-0" onclick="window.selectTicker(\'' + sym + '\')">'
+        + '<div class="flex-1 min-w-0"><div class="font-headline text-sm font-bold text-[#dce2f7]">' + (r.symbol||'') + '</div>'
+        + '<div class="font-body text-xs text-[#cfc2d6] truncate">' + name + '</div></div>'
+        + '<div class="text-[10px] font-headline uppercase tracking-widest text-[#988d9f] shrink-0">' + exch + '</div></button>';
     }).join('');
     dd.classList.remove('hidden');
   }
@@ -431,32 +490,34 @@
     if (dd) dd.classList.add('hidden');
     document.getElementById('loading-state').classList.remove('hidden');
     var cs = document.getElementById('company-section');
-    cs.classList.add('opacity-0', 'pointer-events-none');
+    cs.classList.add('opacity-0','pointer-events-none');
     try {
-      var data = await fetchData(ticker);
-      renderCompany(data, ticker);
+      // Fetch both in parallel; financials may return null (graceful)
+      var results = await Promise.allSettled([fetchQuote(ticker), fetchFinancials(ticker)]);
+      if (results[0].status === 'rejected') throw results[0].reason;
+      renderCompany(results[0].value, results[1].status==='fulfilled' ? results[1].value : null, ticker);
     } catch(err) {
       document.getElementById('loading-state').classList.add('hidden');
-      cs.classList.remove('opacity-0', 'pointer-events-none');
-      set('company-name', 'Failed to load data for ' + ticker);
+      cs.classList.remove('opacity-0','pointer-events-none');
+      set('company-name', 'Could not load "' + ticker + '" — check ticker & try again');
     }
   };
 
   var timer;
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function(){
     var input = document.getElementById('search-input');
-    var dd = document.getElementById('search-dropdown');
+    var dd    = document.getElementById('search-dropdown');
     if (!input) return;
-    input.addEventListener('input', function() {
+    input.addEventListener('input', function(){
       clearTimeout(timer);
       var q = this.value.trim();
-      if (!q) { if (dd) dd.classList.add('hidden'); return; }
-      timer = setTimeout(async function() { showDropdown(await doSearch(q)); }, 350);
+      if (!q) { if(dd) dd.classList.add('hidden'); return; }
+      timer = setTimeout(async function(){ showDropdown(await doSearch(q)); }, 350);
     });
-    input.addEventListener('keydown', function(e) {
+    input.addEventListener('keydown', function(e){
       if (e.key === 'Enter' && this.value.trim()) window.selectTicker(this.value.trim().toUpperCase());
     });
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function(e){
       if (input && !input.contains(e.target) && dd && !dd.contains(e.target)) dd.classList.add('hidden');
     });
   });
